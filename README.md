@@ -19,22 +19,22 @@ local computer. The second line is ready to use if you installed this
 library as a package in your project:
 
 ```
-php bin/benchmark.php
-php vendor/quillguild/bin/benchmark.php
+php bin/local.php
+php vendor/quillguild/benchmark/bin/benchmark.php
 ```
 
 ##### HTTP GET requests
 
 ```
-php bin/benchmark.php benchmark:http:get https://example.org 10 2
-php vendor/quillguild/bin/benchmark.php benchmark:http:get https://example.org 10 2
+php bin/local.php benchmark:http:get https://example.org 10 2
+php vendor/quillguild/benchmark/bin/benchmark.php benchmark:http:get https://example.org 10 2
 ```
 
 ##### Command line calls
 
 ```
-php bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
-php vendor/quillguild/bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
+php bin/local.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
+php vendor/quillguild/benchmark/bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
 ```
 
 To see detailed descriptions for every command, ready Bash usage below.
