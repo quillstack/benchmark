@@ -56,7 +56,7 @@ echo "${parallel} concurrently"
 
 echo "Command \`${command}\`"
 
-echo
+echo '-------------------------------------------------------------------'
 echo -n "Took ${took_seconds} s, "
 echo -n "${per_second} calls per second, "
 echo -n "${avg_time} avg call time"

@@ -60,7 +60,7 @@ echo "${parallel} concurrently"
 
 echo "URL ${url}"
 
-echo
+echo '--------------------------------------------------------------------'
 echo -n "Took ${took_seconds} s, "
 echo -n "${per_second} requests per second, "
 echo -n "${avg_time} avg req time"
