@@ -4,6 +4,12 @@ This repository contains a script to test HTTP GET requests or command line call
 
 ## PHP usage
 
+You can install this package using _Composer_:
+
+```
+composer require --dev quillguild/benchmark
+```
+
 In PHP console you can use this library by running commands:
 
 ##### List available commands
