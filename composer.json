@@ -1,0 +1,23 @@
+{
+    "name": "quillguild/benchmark",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Radek Ziemniewicz",
+            "email": "radoslaw@ziemniewicz.pl"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "symfony/console": "^5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "QuillBenchamrk\\": "src/QuillBenchamrk/"
+        }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.1"
+    }
+}

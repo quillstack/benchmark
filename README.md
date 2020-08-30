@@ -2,7 +2,43 @@
 
 This repository contains a script to test HTTP GET requests or command line calls.
 
+## PHP usage
+
+In PHP console you can use this library by running commands:
+
+##### List available commands
+
+The first line is available when you cloned this repository to your
+local computer. The second line is ready to use if you installed this
+library as a package in your project:
+
+```
+php bin/benchmark.php
+php vendor/quillguild/bin/benchmark.php
+```
+
+##### HTTP GET requests
+
+```
+php bin/benchmark.php benchmark:http:get https://example.org 10 2
+php vendor/quillguild/bin/benchmark.php benchmark:http:get https://example.org 10 2
+```
+
+##### Command line calls
+
+```
+php bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
+php vendor/quillguild/bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
+```
+
+To see detailed descriptions for every command, ready Bash usage below.
+
+## Bash usage
+
+You can also use Bash commands to run benchmarks.
+
 ### HTTP GET requests
+
 Usage:
 
 ```
