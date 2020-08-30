@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# MIT License
+# Copyright (c) 2020 Radek Ziemniewicz
+
 usage () {
     me=`basename "$0"`
 
@@ -9,8 +12,8 @@ usage () {
     echo "./${me} http://127.0.0.1:8088 10 2"
     echo
     echo "Where:"
-    echo "- 100 is total requests number"
-    echo "- 5 is number of concurrent requests"
+    echo "- 10 is a total number of requests"
+    echo "- 2 is a number of concurrent requests"
     echo
     exit 1
 }
@@ -31,12 +34,12 @@ parallel=$3
 
 start_time=`get_milliseconds`
 
-log_file="output_${requests}_${parallel}.log"
+log_file="output_get_${requests}_${parallel}_${start_time}.log"
 echo -n '' > $log_file
 
 seq 1 $requests | xargs -I $ -n1 -P${parallel} curl --request GET \
     --location $url \
-    --write-out '%{time_total} \n' \
+    --write-out '%{time_total}\n' \
     --output /dev/null \
     --silent >> $log_file
 
@@ -51,11 +54,15 @@ avg_time=$(awk "BEGIN {printf \"%.6f\",${total_time}/${requests}}")
 
 rm $log_file
 
+echo
 echo -n "${requests} requests, "
-echo "${parallel} concurrently:"
+echo "${parallel} concurrently"
 
-echo -n "URL ${url}, "
-echo -n "took ${took_seconds} s, "
+echo "URL ${url}"
+
+echo
+echo -n "Took ${took_seconds} s, "
 echo -n "${per_second} requests per second, "
 echo -n "${avg_time} avg req time"
+echo
 echo
