@@ -7,7 +7,7 @@ This repository contains a script to test HTTP GET requests or command line call
 You can install this package using _Composer_:
 
 ```
-composer require --dev quillguild/benchmark
+composer require --dev quillstack/benchmark
 ```
 
 In PHP console you can use this library by running commands:
@@ -20,21 +20,21 @@ library as a package in your project:
 
 ```
 php bin/local.php
-php vendor/quillguild/benchmark/bin/benchmark.php
+php vendor/quillstack/benchmark/bin/benchmark.php
 ```
 
 ##### HTTP GET requests
 
 ```
 php bin/local.php benchmark:http:get https://example.org 10 2
-php vendor/quillguild/benchmark/bin/benchmark.php benchmark:http:get https://example.org 10 2
+php vendor/quillstack/benchmark/bin/benchmark.php benchmark:http:get https://example.org 10 2
 ```
 
 ##### Command line calls
 
 ```
 php bin/local.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
-php vendor/quillguild/benchmark/bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
+php vendor/quillstack/benchmark/bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
 ```
 
 To see detailed descriptions for every command, ready Bash usage below.
@@ -99,14 +99,14 @@ echo $roundedTime . PHP_EOL;
 Usage example:
 
 ```
-./command_line.sh "php ../dependency-injection/public/index.php" 10 2
+./command_line.sh "php ../di/public/index.php" 10 2
 ```
 
 Output:
 
 ```
 10 calls, 2 concurrently
-Command `php ../dependency-injection/public/index.php`
+Command `php ../di/public/index.php`
 -------------------------------------------------------------------
 Took 0.247000 s, 40.485830 calls per second, 0.001087 avg call time
 ```
@@ -121,14 +121,14 @@ You can have different results for different parameters. For example the
 results for the same script:
 
 ```
-./command_line.sh "php ../dependency-injection/public/index.php" 1000 100
+./command_line.sh "php ../di/public/index.php" 1000 100
 ```
 
 are different for these parameters:
 
 ```
 1000 calls, 100 concurrently
-Command `php ../dependency-injection/public/index.php`
+Command `php ../di/public/index.php`
 -------------------------------------------------------------------
 Took 7.760000 s, 128.865979 calls per second, 0.080927 avg call time
 ```
@@ -138,17 +138,24 @@ Because we increased the number of concurrent calls.
 If we use the same concurrent calls like in the first command line example:
 
 ```
-./command_line.sh "php ../dependency-injection/public/index.php" 1000 2
+./command_line.sh "php ../di/public/index.php" 1000 2
 ```
 
 The results should be similar to the first ones:
 
 ```
 1000 calls, 2 concurrently
-Command `php ../dependency-injection/public/index.php`
+Command `php ../di/public/index.php`
 -------------------------------------------------------------------
 Took 22.795000 s, 43.869270 calls per second, 0.001178 avg call time
 ```
 
 What gives use around 40 calls per second, if we have two concurrent
 calls.
+
+## Quill Stack
+
+If you want to know more about other solutions, visit the website: \
+https://quillstack.com/ 
+
+![The Quill Stack](quillstack.png)
