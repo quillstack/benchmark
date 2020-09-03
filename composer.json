@@ -1,5 +1,6 @@
 {
     "name": "quillstack/benchmark",
+    "description": "Bash/PHP script to benchmark HTTP requests and command line scripts.",
     "type": "library",
     "license": "MIT",
     "authors": [
