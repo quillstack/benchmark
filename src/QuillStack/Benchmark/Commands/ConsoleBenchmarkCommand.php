@@ -2,34 +2,34 @@
 
 declare(strict_types=1);
 
-namespace QuillBenchamrk\Commands;
+namespace QuillStack\Benchmark\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-final class HttpGetBenchmarkCommand extends Command
+final class ConsoleBenchmarkCommand extends Command
 {
     /**
      * {@inheritdoc}
      */
-    protected static $defaultName = 'benchmark:http:get';
+    protected static $defaultName = 'benchmark:console';
 
     /**
      * Root directory.
      *
      * @var string
      */
-    private const SRC = __DIR__ . '/../../../';
+    private const SRC = __DIR__ . '/../../../../../benchmark/';
 
     /**
      * {@inheritDoc}
      */
     protected function configure()
     {
-        $this->addArgument('url', InputArgument::REQUIRED);
-        $this->addArgument('requests', InputArgument::REQUIRED);
+        $this->addArgument('command-to-run', InputArgument::REQUIRED);
+        $this->addArgument('calls', InputArgument::REQUIRED);
         $this->addArgument('concurrency', InputArgument::REQUIRED);
     }
 
@@ -40,12 +40,12 @@ final class HttpGetBenchmarkCommand extends Command
     {
         // Arguments.
         $src = self::SRC;
-        $url = $input->getArgument('url');
-        $requests = $input->getArgument('requests');
+        $command = $input->getArgument('command-to-run');
+        $calls = $input->getArgument('calls');
         $concurrency = $input->getArgument('concurrency');
 
         // Bash script.
-        $result = shell_exec("{$src}/http_get.sh '{$url}' {$requests} {$concurrency}");
+        $result = shell_exec("{$src}/command_line.sh '{$command}' {$calls} {$concurrency}");
 
         // Output.
         $output->write($result);

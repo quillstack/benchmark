@@ -3,8 +3,8 @@
 
 require __DIR__ . '/../../../../vendor/autoload.php';
 
-use QuillBenchamrk\Commands\ConsoleBenchmarkCommand;
-use QuillBenchamrk\Commands\HttpGetBenchmarkCommand;
+use QuillStack\Benchmark\Commands\ConsoleBenchmarkCommand;
+use QuillStack\Benchmark\Commands\HttpGetBenchmarkCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();

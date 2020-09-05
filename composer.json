@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "QuillBenchamrk\\": "src/QuillBenchamrk/"
+            "QuillStack\\Benchmark\\": "src/QuillStack/Benchmark/"
         }
     },
     "require-dev": {
