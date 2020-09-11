@@ -14,34 +14,45 @@ In PHP console you can use this library by running commands:
 
 ##### List available commands
 
-The first line is available when you cloned this repository to your
-local computer. The second line is ready to use if you installed this
-library as a package in your project:
+If you installed this library as a package in your project, you
+can run these commands:
+
+###### List of available commands
 
 ```
-php bin/local.php
-php vendor/quillstack/benchmark/bin/benchmark.php
+./vendor/bin/benchmark
 ```
 
-##### HTTP GET requests
+###### HTTP GET requests
 
 ```
-php bin/local.php benchmark:http:get https://example.org 10 2
-php vendor/quillstack/benchmark/bin/benchmark.php benchmark:http:get https://example.org 10 2
+./vendor/bin/benchmark benchmark:http:get https://example.org 10 2
 ```
 
-##### Command line calls
+###### Command line calls
 
 ```
-php bin/local.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
-php vendor/quillstack/benchmark/bin/benchmark.php benchmark:console "php ../dependency-injection-example/public/php-di.php" 10 2
+./vendor/bin/benchmark benchmark:console "php ../test.php" 10 2
 ```
+
+#### Cloned reposotiry
+
+If you cloned this repository to your local computer, use
+these commands:
+
+```
+./bin/local
+./bin/local benchmark:http:get https://example.org 10 2
+./bin/local benchmark:console "php ../test.php" 10 2
+```
+
 
 To see detailed descriptions for every command, ready Bash usage below.
 
 ## Bash usage
 
-You can also use Bash commands to run benchmarks.
+You can also use Bash commands to run benchmarks. These commands
+work only if you clone this repository to your computer or server.
 
 ### HTTP GET requests
 
@@ -99,14 +110,14 @@ echo $roundedTime . PHP_EOL;
 Usage example:
 
 ```
-./command_line.sh "php ../di/public/index.php" 10 2
+./command_line.sh "php ../test.php" 10 2
 ```
 
 Output:
 
 ```
 10 calls, 2 concurrently
-Command `php ../di/public/index.php`
+Command `php ../test.php`
 -------------------------------------------------------------------
 Took 0.247000 s, 40.485830 calls per second, 0.001087 avg call time
 ```
@@ -121,14 +132,14 @@ You can have different results for different parameters. For example the
 results for the same script:
 
 ```
-./command_line.sh "php ../di/public/index.php" 1000 100
+./command_line.sh "php ../test.php" 1000 100
 ```
 
 are different for these parameters:
 
 ```
 1000 calls, 100 concurrently
-Command `php ../di/public/index.php`
+Command `php ../test.php`
 -------------------------------------------------------------------
 Took 7.760000 s, 128.865979 calls per second, 0.080927 avg call time
 ```
@@ -138,7 +149,7 @@ Because we increased the number of concurrent calls.
 If we use the same concurrent calls like in the first command line example:
 
 ```
-./command_line.sh "php ../di/public/index.php" 1000 2
+./command_line.sh "php ../test.php" 1000 2
 ```
 
 The results should be similar to the first ones:

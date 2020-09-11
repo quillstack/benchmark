@@ -9,7 +9,7 @@ usage () {
     echo "No arguments provided"
     echo
     echo "Use example:"
-    echo "./${me} \"php public/index.php\" 10 2"
+    echo "./${me} php ../test.php 10 2"
     echo
     echo "Where:"
     echo "- 10 is a total number of calls"
@@ -31,6 +31,15 @@ if [ $# -lt 3 ]; then usage; fi
 command=$1
 requests=$2
 parallel=$3
+
+result=$($command 2>&1)
+
+if [[ ! $result =~ ^[0-9]+\.?[0-9]*$ ]]
+then
+    echo "Script not found or the result format is not float with a new line at the end (e.g. 1.2321)"
+
+    exit 2
+fi
 
 start_time=`get_milliseconds`
 
