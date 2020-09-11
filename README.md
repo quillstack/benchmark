@@ -3,6 +3,9 @@
 [![StyleCI](https://github.styleci.io/repos/291494182/shield?branch=master)](https://github.styleci.io/repos/291494182?branch=master)
 [![Build Status](https://travis-ci.org/quillstack/benchmark.svg?branch=master)](https://travis-ci.org/quillstack/benchmark)
 [![CodeFactor](https://www.codefactor.io/repository/github/quillstack/benchmark/badge)](https://www.codefactor.io/repository/github/quillstack/benchmark)
+[![Downloads](https://img.shields.io/packagist/dt/quillstack/benchmark.svg)](https://packagist.org/packages/quillstack/benchmark)
+![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/quillstack/di)
+![Packagist License](https://img.shields.io/packagist/l/quillstack/di)
 
 This repository contains a script to test HTTP GET requests or command line calls.
 
@@ -58,7 +61,7 @@ To see detailed descriptions for every command, ready Bash usage below.
 You can also use Bash commands to run benchmarks. These commands
 work only if you clone this repository to your computer or server.
 
-### HTTP GET requests
+###### HTTP GET requests
 
 Usage:
 
@@ -84,7 +87,7 @@ requests at the time. The entire test took around 2.5 seconds. It means
 the website could server 4 requests per second with 0.5 seconds the average
 response time.
 
-### Command line calls
+###### Command line calls
 
 If you want to test command line calls, be sure every call respond with
 an execution time (in seconds):
