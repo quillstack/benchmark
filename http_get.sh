@@ -48,7 +48,7 @@ end_time=$(get_milliseconds)
 took=$(($end_time - $start_time))
 took_seconds=$(awk "BEGIN {printf \"%.6f\",${took}/1000}")
 per_second=$(awk "BEGIN {printf \"%.6f\",${requests}/${took_seconds}}")
-total_time_operation=$(cat $log_file | sed 's/ //g' | tr '\n' '+' | sed 's/+$//g')
+total_time_operation=$(sed 's/ //g' $log_file | tr '\n' '+' | sed 's/+$//g')
 total_time=$(awk "BEGIN {printf \"%.6f\",$total_time_operation}")
 avg_time=$(awk "BEGIN {printf \"%.6f\",${total_time}/${requests}}")
 
