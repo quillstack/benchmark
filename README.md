@@ -1,6 +1,8 @@
 # Benchmark HTTP requests and command line calls
 
 [![StyleCI](https://github.styleci.io/repos/291494182/shield?branch=master)](https://github.styleci.io/repos/291494182?branch=master)
+[![Build Status](https://travis-ci.org/quillstack/benchmark.svg?branch=master)](https://travis-ci.org/quillstack/benchmark)
+
 
 This repository contains a script to test HTTP GET requests or command line calls.
 

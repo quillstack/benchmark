@@ -4,7 +4,7 @@
 # Copyright (c) 2020 Radek Ziemniewicz
 
 usage () {
-    me=`basename "$0"`
+    me=$(basename "$0")
 
     echo "No arguments provided"
     echo
@@ -20,9 +20,9 @@ usage () {
 
 get_milliseconds () {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        echo $(date +%s%N | cut -b1-13)
+        date +%s%N | cut -b1-13
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        echo $(python -c 'from time import time; print int(round(time() * 1000))')
+        python -c 'from time import time; print int(round(time() * 1000))'
     fi
 }
 
@@ -32,7 +32,7 @@ url=$1
 requests=$2
 parallel=$3
 
-start_time=`get_milliseconds`
+start_time=$(get_milliseconds)
 
 log_file="output_get_${requests}_${parallel}_${start_time}.log"
 echo -n '' > $log_file
@@ -43,9 +43,9 @@ seq 1 $requests | xargs -I $ -n1 -P${parallel} curl --request GET \
     --output /dev/null \
     --silent >> $log_file
 
-end_time=`get_milliseconds`
+end_time=$(get_milliseconds)
 
-took=$(expr $end_time - $start_time)
+took=$(($end_time - $start_time))
 took_seconds=$(awk "BEGIN {printf \"%.6f\",${took}/1000}")
 per_second=$(awk "BEGIN {printf \"%.6f\",${requests}/${took_seconds}}")
 total_time_operation=$(cat $log_file | sed 's/ //g' | tr '\n' '+' | sed 's/+$//g')
