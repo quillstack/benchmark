@@ -1,11 +1,11 @@
 # Benchmark HTTP requests and command line calls
 
-[![StyleCI](https://github.styleci.io/repos/291494182/shield?branch=master)](https://github.styleci.io/repos/291494182?branch=master)
-[![Build Status](https://travis-ci.org/quillstack/benchmark.svg?branch=master)](https://travis-ci.org/quillstack/benchmark)
-[![CodeFactor](https://www.codefactor.io/repository/github/quillstack/benchmark/badge)](https://www.codefactor.io/repository/github/quillstack/benchmark)
+[![Latest Version](https://img.shields.io/packagist/v/quillstack/benchmark.svg)](https://packagist.org/packages/quillstack/benchmark)
 [![Downloads](https://img.shields.io/packagist/dt/quillstack/benchmark.svg)](https://packagist.org/packages/quillstack/benchmark)
-![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/quillstack/di)
-![Packagist License](https://img.shields.io/packagist/l/quillstack/di)
+[![PHP Version](https://img.shields.io/packagist/php-v/quillstack/benchmark)](https://packagist.org/packages/quillstack/benchmark)
+[![StyleCI](https://github.styleci.io/repos/291494182/shield?branch=main)](https://github.styleci.io/repos/291494182?branch=main)
+[![CodeFactor](https://www.codefactor.io/repository/github/quillstack/benchmark/badge)](https://www.codefactor.io/repository/github/quillstack/benchmark)
+[![License](https://img.shields.io/packagist/l/quillstack/benchmark)](https://github.com/quillstack/benchmark/blob/main/LICENSE)
 
 This repository contains a script to test HTTP GET requests or command line calls.
 
