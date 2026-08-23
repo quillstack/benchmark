@@ -1,7 +1,7 @@
 {
     "name": "quillstack/benchmark",
     "description": "Bash and PHP scripts to benchmark HTTP requests and command line calls.",
-    "homepage": "https://quillstack.org/benchmark",
+    "homepage": "https://quillstack.org/packages/benchmark",
     "type": "library",
     "bin": [
         "bin/benchmark"
