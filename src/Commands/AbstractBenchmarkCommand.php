@@ -5,23 +5,20 @@ declare(strict_types=1);
 namespace Quillstack\Benchmark\Commands;
 
 use Quillstack\Benchmark\Exceptions\BenchmarkException;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
+use Quillstack\Cli\CommandInterface;
+use Quillstack\Cli\Input;
 
-abstract class AbstractBenchmarkCommand extends Command
+abstract class AbstractBenchmarkCommand implements CommandInterface
 {
     /**
-     * An argument, as the string it has to be.
-     *
-     * The console hands them back as `mixed`, and the value goes on to be part of a command
-     * line — so what it is has to be checked rather than assumed.
+     * An argument, or a refusal saying which one is missing.
      */
-    protected function text(InputInterface $input, string $name): string
+    protected function argument(Input $input, int $index, string $name): string
     {
-        $value = $input->getArgument($name);
+        $value = $input->getArgument($index);
 
-        if (!is_string($value)) {
-            throw new BenchmarkException("{$name} has to be given as text");
+        if ($value === null || $value === '') {
+            throw new BenchmarkException("Missing argument: {$name}");
         }
 
         return $value;

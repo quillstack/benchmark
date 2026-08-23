@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 use Quillstack\Benchmark\Commands\ConsoleBenchmarkCommand;
 use Quillstack\Benchmark\Commands\HttpGetBenchmarkCommand;
-use Symfony\Component\Console\Application;
+use Quillstack\Cli\Console;
+use Quillstack\DI\Container;
 
-// Installed as a dependency, or run from the repository itself. Walking up a fixed number of
-// directories held for one of those and not the other.
+// Installed as a dependency, or run from the repository itself.
 foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoload) {
     if (is_file($autoload)) {
         require $autoload;
@@ -17,7 +17,9 @@ foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php
     }
 }
 
-$application = new Application('Quillstack Benchmark');
-$application->add(new HttpGetBenchmarkCommand());
-$application->add(new ConsoleBenchmarkCommand());
-$application->run();
+$console = new Console(new Container(), [
+    HttpGetBenchmarkCommand::class,
+    ConsoleBenchmarkCommand::class,
+]);
+
+exit($console->run($argv));

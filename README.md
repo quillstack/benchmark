@@ -24,6 +24,10 @@ what is already on the machine.
 - PHP 8.1 or newer, for the console commands
 - `bash`, `curl`, `awk` and `xargs` — the scripts alone need no PHP at all
 
+The console side is [quillstack/cli](https://github.com/quillstack/cli). It used to be
+Symfony's — nine packages and 1.7 MB to read three arguments, in a stack whose only other
+outside dependencies are PSR interfaces.
+
 ### Installation
 
 ```shell

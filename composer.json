@@ -15,7 +15,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "symfony/console": "^6.0|^7.0"
+        "quillstack/cli": "^0.6",
+        "quillstack/di": "^0.6"
     },
     "autoload": {
         "psr-4": {
