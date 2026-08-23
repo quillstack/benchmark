@@ -3,6 +3,11 @@
 # MIT License
 # Copyright (c) 2020 Radek Ziemniewicz
 
+set -euo pipefail
+
+# shellcheck source=lib/common.sh
+. "$(dirname "$0")/lib/common.sh"
+
 usage () {
     me=$(basename "$0")
 
@@ -18,41 +23,33 @@ usage () {
     exit 1
 }
 
-get_milliseconds () {
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        date +%s%N | cut -b1-13
-    elif [[ "$OSTYPE" == "darwin"* ]]; then
-        python -c 'from time import time; print int(round(time() * 1000))'
-    fi
-}
-
 if [ $# -lt 3 ]; then usage; fi
 
 url=$1
 requests=$2
 parallel=$3
 
+require_number "$requests"
+require_number "$parallel"
+
 start_time=$(get_milliseconds)
 
-log_file="output_get_${requests}_${parallel}_${start_time}.log"
-echo -n '' > $log_file
+log_file=$(mktemp "${TMPDIR:-/tmp}/benchmark_get_XXXXXX")
+trap 'rm -f "${log_file}"' EXIT
 
-seq 1 $requests | xargs -I $ -n1 -P${parallel} curl --request GET \
-    --location $url \
+seq 1 "$requests" | xargs -I '{}' -n1 "-P${parallel}" curl --request GET \
+    --location "$url" \
     --write-out '%{time_total}\n' \
     --output /dev/null \
-    --silent >> $log_file
+    --silent >> "$log_file"
 
 end_time=$(get_milliseconds)
 
-took=$(($end_time - $start_time))
-took_seconds=$(awk "BEGIN {printf \"%.6f\",${took}/1000}")
-per_second=$(awk "BEGIN {printf \"%.6f\",${requests}/${took_seconds}}")
-total_time_operation=$(sed 's/ //g' $log_file | tr '\n' '+' | sed 's/+$//g')
-total_time=$(awk "BEGIN {printf \"%.6f\",$total_time_operation}")
-avg_time=$(awk "BEGIN {printf \"%.6f\",${total_time}/${requests}}")
-
-rm $log_file
+took=$((end_time - start_time))
+took_seconds=$(awk "BEGIN {printf \"%.6f\", ${took}/1000}")
+per_second=$(awk "BEGIN {printf \"%.6f\", ${requests}/${took_seconds}}")
+total_time=$(awk '{ total += $1 } END { printf "%.6f", total }' "$log_file")
+avg_time=$(awk "BEGIN {printf \"%.6f\", ${total_time}/${requests}}")
 
 echo
 echo -n "${requests} requests, "

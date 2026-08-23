@@ -1,0 +1,69 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # So a run can be asked for without pushing something to ask for it.
+  workflow_dispatch:
+
+jobs:
+  static-analysis:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.1', '8.2', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+
+      - uses: ramsey/composer-install@v3
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
+
+  scripts:
+    name: Scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - uses: ramsey/composer-install@v3
+
+      - name: Shell syntax
+        run: |
+          bash -n http_get.sh
+          bash -n command_line.sh
+          bash -n lib/common.sh
+
+      # The clock used to answer with nothing on macOS and the scripts reported an empty
+      # measurement rather than failing, so this asks for a number and checks it is one.
+      - name: The clock answers with a number
+        run: |
+          . lib/common.sh
+          stamp=$(get_milliseconds)
+          echo "Clock: ${stamp}"
+          [[ "$stamp" =~ ^[0-9]{13}$ ]] || { echo "Not a millisecond timestamp"; exit 1; }
+
+      - name: Measuring a command
+        run: |
+          printf '<?php\n$s = microtime(true);\nusleep(1000);\necho number_format(microtime(true) - $s, 6), "\\n";\n' > /tmp/timed.php
+          output=$(./bin/benchmark benchmark:console "php /tmp/timed.php" 5 2)
+          echo "$output"
+          echo "$output" | grep -qE 'Took [0-9]+\.[0-9]+ s' || { echo "No timing in the output"; exit 1; }
+          echo "$output" | grep -qE '[0-9]+\.[0-9]+ calls per second' || { echo "No rate in the output"; exit 1; }
+
+      - name: A count which is not a number is refused
+        run: |
+          ! ./bin/benchmark benchmark:console "php /tmp/timed.php" ten 2 2>/dev/null

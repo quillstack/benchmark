@@ -12,173 +12,109 @@
 [![Security](https://sonarcloud.io/api/project_badges/measure?project=quillstack_benchmark&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_benchmark)
 [![License](https://img.shields.io/packagist/l/quillstack/benchmark)](https://github.com/quillstack/benchmark/blob/main/LICENSE)
 
-This repository contains a script to test HTTP GET requests or command line calls.
+Bash and PHP scripts to benchmark HTTP requests and command line calls. Full documentation:
+https://quillstack.org/benchmark
 
-## PHP usage
+How long does the thing take, and how many of them a second. Two shell scripts and a console
+wrapper around them — `curl` and `xargs` do the work, so there is nothing to install beyond
+what is already on the machine.
 
-You can install this package using _Composer_:
+### Requirements
 
-```
+- PHP 8.1 or newer, for the console commands
+- `bash`, `curl`, `awk` and `xargs` — the scripts alone need no PHP at all
+
+### Installation
+
+```shell
 composer require --dev quillstack/benchmark
 ```
 
-In PHP console you can use this library by running commands:
+### Usage
 
-##### List available commands
+#### HTTP requests
 
-If you installed this library as a package in your project, you
-can run these commands:
-
-###### List of available commands
-
-```
-./vendor/bin/benchmark
+```shell
+./vendor/bin/benchmark benchmark:http:get https://example.org 100 10
 ```
 
-###### HTTP GET requests
-
-```
-./vendor/bin/benchmark benchmark:http:get https://example.org 10 2
-```
-
-###### Command line calls
-
-```
-./vendor/bin/benchmark benchmark:console "php ../test.php" 10 2
-```
-
-#### Cloned reposotiry
-
-If you cloned this repository to your local computer, use
-these commands:
-
-```
-./bin/local
-./bin/local benchmark:http:get https://example.org 10 2
-./bin/local benchmark:console "php ../test.php" 10 2
-```
-
-
-To see detailed descriptions for every command, ready Bash usage below.
-
-## Bash usage
-
-You can also use Bash commands to run benchmarks. These commands
-work only if you clone this repository to your computer or server.
-
-###### HTTP GET requests
-
-Usage:
-
-```
-./http_get.sh https://example.org 10 2
-```
-
-Where:
-- 10 is a total number of requests
-- 2 is a number of concurrent requests
-
-Output:
-
-```
-10 requests, 2 concurrently
+```text
+100 requests, 10 concurrently
 URL https://example.org
 --------------------------------------------------------------------
-Took 2.468000 s, 4.051864 requests per second, 0.469415 avg req time
+Took 2.104000 s, 47.528517 requests per second, 0.196742 avg req time
 ```
 
-What means we sent 10 GET requests to this host. We decided to send two
-requests at the time. The entire test took around 2.5 seconds. It means
-the website could server 4 requests per second with 0.5 seconds the average
-response time.
+A hundred requests, ten at a time.
 
-###### Command line calls
+#### Command line calls
 
-If you want to test command line calls, be sure every call respond with
-an execution time (in seconds):
-
-```
-0.001699
-``` 
-
-For PHP the script could look like:
+The command has to print one number — the seconds it took — and nothing else:
 
 ```php
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+$started = microtime(true);
 
-$start = microtime(true);
+// … the thing being measured …
 
-$container = new Container();
-$service = $container->get(ExampleService::class);
-
-$time = microtime(true) - $start;
-$roundedTime = round($time, 6);
-
-echo $roundedTime . PHP_EOL;
+echo number_format(microtime(true) - $started, 6), "\n";
 ```
 
-Usage example:
-
-```
-./command_line.sh "php ../test.php" 10 2
+```shell
+./vendor/bin/benchmark benchmark:console "php measured.php" 100 10
 ```
 
-Output:
-
-```
-10 calls, 2 concurrently
-Command `php ../test.php`
+```text
+100 calls, 10 concurrently
+Command `php measured.php`
 -------------------------------------------------------------------
-Took 0.247000 s, 40.485830 calls per second, 0.001087 avg call time
+Took 0.512000 s, 195.312500 calls per second, 0.001264 avg call time
 ```
 
-The results say we called the script 10 times with 2 concurrently calls.
-Our test took around 250 milliseconds, what means we could call this
-script 40 times per seconds, and average call time would be 1 millisecond.
+#### Without PHP
 
-#### Different results
+The scripts run on their own:
 
-You can have different results for different parameters. For example the
-results for the same script:
-
-```
-./command_line.sh "php ../test.php" 1000 100
+```shell
+./http_get.sh https://example.org 100 10
+./command_line.sh "php measured.php" 100 10
 ```
 
-are different for these parameters:
+### An empty measurement is worse than none
 
-```
-1000 calls, 100 concurrently
-Command `php ../test.php`
--------------------------------------------------------------------
-Took 7.760000 s, 128.865979 calls per second, 0.080927 avg call time
-```
+The clock is read differently on every system, and reading it wrongly used to produce this:
 
-Because we increased the number of concurrent calls.
-
-If we use the same concurrent calls like in the first command line example:
-
-```
-./command_line.sh "php ../test.php" 1000 2
+```text
+Took  s,  requests per second, 0.067014 avg req time
 ```
 
-The results should be similar to the first ones:
+A number nobody could see was missing. `get_milliseconds` now tries GNU `date`, then `perl`,
+then `python3`, and refuses outright where none of them can answer. A count which is not a
+positive whole number is refused too, rather than reaching a shell as part of a command.
 
+### Technical documentation
+
+| File | What it is |
+| --- | --- |
+| `http_get.sh` | asks a URL many times, some at once, and reports |
+| `command_line.sh` | runs a command many times and reports |
+| `lib/common.sh` | the clock, and the check that a count is one |
+| `src/Benchmark.php` | finds the scripts and runs them with everything escaped |
+| `src/Commands/HttpGetBenchmarkCommand.php` | `benchmark:http:get` |
+| `src/Commands/ConsoleBenchmarkCommand.php` | `benchmark:console` |
+
+Both take the same three arguments: what to measure, how many times, and how many at once.
+
+Everything reaching a shell goes through `escapeshellarg()`, so a URL holding a quote is a URL
+rather than a second command.
+
+### Static analysis
+
+```shell
+composer stan
 ```
-1000 calls, 2 concurrently
-Command `php ../di/public/index.php`
--------------------------------------------------------------------
-Took 22.795000 s, 43.869270 calls per second, 0.001178 avg call time
-```
 
-What gives use around 40 calls per second, if we have two concurrent
-calls.
+### License
 
-## Quill Stack
-
-If you want to know more about other solutions, visit the website: \
-https://quillstack.com/ 
-
-![The Quill Stack](http://quillstack.com/quillstack.png)
+MIT. See [LICENSE](LICENSE).

@@ -1,14 +1,23 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/../../../../vendor/autoload.php';
+declare(strict_types=1);
 
-use QuillStack\Benchmark\Commands\ConsoleBenchmarkCommand;
-use QuillStack\Benchmark\Commands\HttpGetBenchmarkCommand;
+use Quillstack\Benchmark\Commands\ConsoleBenchmarkCommand;
+use Quillstack\Benchmark\Commands\HttpGetBenchmarkCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
+// Installed as a dependency, or run from the repository itself. Walking up a fixed number of
+// directories held for one of those and not the other.
+foreach ([__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'] as $autoload) {
+    if (is_file($autoload)) {
+        require $autoload;
 
+        break;
+    }
+}
+
+$application = new Application('Quillstack Benchmark');
 $application->add(new HttpGetBenchmarkCommand());
 $application->add(new ConsoleBenchmarkCommand());
 $application->run();
