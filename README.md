@@ -5,6 +5,11 @@
 [![PHP Version](https://img.shields.io/packagist/php-v/quillstack/benchmark)](https://packagist.org/packages/quillstack/benchmark)
 [![StyleCI](https://github.styleci.io/repos/291494182/shield?branch=main)](https://github.styleci.io/repos/291494182?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/quillstack/benchmark/badge)](https://www.codefactor.io/repository/github/quillstack/benchmark)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=quillstack_benchmark&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=quillstack_benchmark)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=quillstack_benchmark&metric=coverage)](https://sonarcloud.io/summary/new_code?id=quillstack_benchmark)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=quillstack_benchmark&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_benchmark)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=quillstack_benchmark&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_benchmark)
+[![Security](https://sonarcloud.io/api/project_badges/measure?project=quillstack_benchmark&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=quillstack_benchmark)
 [![License](https://img.shields.io/packagist/l/quillstack/benchmark)](https://github.com/quillstack/benchmark/blob/main/LICENSE)
 
 This repository contains a script to test HTTP GET requests or command line calls.
