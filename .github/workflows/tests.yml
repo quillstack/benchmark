@@ -28,6 +28,9 @@ jobs:
       - name: PHPStan
         run: vendor/bin/phpstan analyse --no-progress
 
+      - name: Unit tests
+        run: vendor/bin/unit-tests
+
   scripts:
     name: Scripts
     runs-on: ubuntu-latest

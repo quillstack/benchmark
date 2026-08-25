@@ -20,11 +20,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Quillstack\\Benchmark\\": "src/"
+            "Quillstack\\Benchmark\\": "src/",
+            "Quillstack\\Benchmark\\Tests\\": "tests/"
         }
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.0"
+        "phpstan/phpstan": "^2.0",
+        "quillstack/unit-tests": "^0.9"
     },
     "keywords": [
         "benchmark",
@@ -34,6 +36,8 @@
         "php8"
     ],
     "scripts": {
+        "test": "unit-tests",
+        "test:coverage": "phpdbg -qrr ./vendor/bin/unit-tests",
         "stan": "phpstan analyse"
     },
     "extra": {
